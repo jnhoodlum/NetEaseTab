@@ -28,14 +28,20 @@ import android.widget.TextView;
 
 public class ContentFragment extends Fragment {
 
+	private static final int DEFAULT_MSG = 0x01;
+
 	private ProgressBar mProgressBar;
 	private TextView mContentText;
 	private String mContent;
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			mContentText.setText(mContent);
-			mProgressBar.setVisibility(View.GONE);
+			switch (msg.what) {
+			case DEFAULT_MSG:
+				mContentText.setText(mContent);
+				mProgressBar.setVisibility(View.GONE);
+				break;
+			}
 		}
 	};
 
@@ -66,7 +72,7 @@ public class ContentFragment extends Fragment {
 		public void run() {
 			try {
 				Thread.sleep(2000);
-				mHandler.sendEmptyMessage(0x01);
+				mHandler.sendEmptyMessage(DEFAULT_MSG);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
