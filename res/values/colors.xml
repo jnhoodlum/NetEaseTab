@@ -2,5 +2,8 @@
 <resources>
 
     <color name="white">#FFFFFF</color>
+    <color name="highlight_text">#fd4a48</color>
+    <color name="main_font">#4d4d4d</color>
+    <color name="main_bg">#f2f0eb</color>
 
 </resources>

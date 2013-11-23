@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_tab_titles">
+        <item>头条</item>
+        <item>科技</item>
+        <item>移动互联网</item>
+        <item>另一面</item>
+        <item>娱乐</item>
+        <item>体育</item>
+        <item>财经</item>
+    </string-array>
+
+</resources>
