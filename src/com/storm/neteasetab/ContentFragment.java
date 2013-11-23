@@ -17,6 +17,8 @@
 package com.storm.neteasetab;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,36 +27,49 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ContentFragment extends Fragment {
-	
+
 	private ProgressBar mProgressBar;
 	private TextView mContentText;
 	private String mContent;
-	
+
+	private Handler mHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			mContentText.setText(mContent);
+			mProgressBar.setVisibility(View.GONE);
+		}
+	};
+
 	public static ContentFragment newInstance(String content) {
 		ContentFragment fragment = new ContentFragment();
 		fragment.mContent = content;
 		return fragment;
 	}
-	
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		return inflater.inflate(R.layout.fragment_content, null);
 	}
-	
+
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		initUI();
 	}
-	
+
 	private void initUI() {
 		mProgressBar = (ProgressBar) getView().findViewById(R.id.pb_content);
 		mContentText = (TextView) getView().findViewById(R.id.tv_content);
-//		try {
-//			Thread.sleep(2000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-		mContentText.setText(mContent);
-//		mProgressBar.setVisibility(View.GONE);
+		new Thread(r).start();
 	}
+
+	Runnable r = new Runnable() {
+		@Override
+		public void run() {
+			try {
+				Thread.sleep(2000);
+				mHandler.sendEmptyMessage(0x01);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	};
 }

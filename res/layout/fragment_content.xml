@@ -15,6 +15,7 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="科技" />
+        android:textColor="@color/main_font"
+        android:textSize="@dimen/main_font" />
 
 </LinearLayout>
