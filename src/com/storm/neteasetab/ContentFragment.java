@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ContentFragment extends Fragment {
+public class ContentFragment extends Fragment implements IShowedFragment {
 
 	private static final int DEFAULT_MSG = 0x01;
 
@@ -38,8 +38,9 @@ public class ContentFragment extends Fragment {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case DEFAULT_MSG:
-				mContentText.setText(mContent);
 				mProgressBar.setVisibility(View.GONE);
+				mContentText.setVisibility(View.VISIBLE);
+				mContentText.setText(mContent);
 				break;
 			}
 		}
@@ -58,12 +59,13 @@ public class ContentFragment extends Fragment {
 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initUI();
+		mProgressBar = (ProgressBar) getView().findViewById(R.id.pb_content);
+		mContentText = (TextView) getView().findViewById(R.id.tv_content);
 	}
 
 	private void initUI() {
-		mProgressBar = (ProgressBar) getView().findViewById(R.id.pb_content);
-		mContentText = (TextView) getView().findViewById(R.id.tv_content);
+		mProgressBar.setVisibility(View.VISIBLE);
+		mContentText.setVisibility(View.GONE);
 		new Thread(r).start();
 	}
 
@@ -78,4 +80,9 @@ public class ContentFragment extends Fragment {
 			}
 		}
 	};
+
+	@Override
+	public void onShow() {
+		initUI();
+	}
 }
