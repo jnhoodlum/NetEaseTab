@@ -34,7 +34,6 @@ public class MainActivity extends FragmentActivity {
 		mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
 		mViewPager = (ViewPager) findViewById(R.id.vp_content);
 		mViewPager.setAdapter(mAdapter);
-		mViewPager.setOffscreenPageLimit(0);
 
 		// 默认调用第一个Fragment的onShow()
 		mIndicator.setViewPager(mViewPager, 0);

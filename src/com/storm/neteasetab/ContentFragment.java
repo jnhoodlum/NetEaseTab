@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,9 @@ public class ContentFragment extends Fragment implements OnRefreshListener {
 	private TextView mContentText;
 	private String mContent;
 
+	/*
+	 * 用来标记是否强制初始化
+	 */
 	private boolean forceVisible = false;
 
 	private Handler mHandler = new Handler() {
@@ -59,7 +61,6 @@ public class ContentFragment extends Fragment implements OnRefreshListener {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		Log.e(TAG, "onCreateView");
 		return inflater.inflate(R.layout.fragment_content, null);
 	}
 
@@ -68,11 +69,6 @@ public class ContentFragment extends Fragment implements OnRefreshListener {
 		if (forceVisible) {
 			initUI();
 		}
-	}
-
-	public void onPause() {
-		super.onPause();
-		Log.e(TAG, "onPause");
 	}
 
 	private void initUI() {

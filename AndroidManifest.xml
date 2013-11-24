@@ -14,7 +14,6 @@
         android:label="@string/app_name" >
         <activity
             android:name="com.storm.neteasetab.MainActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/MainIndicator" >
             <intent-filter>
