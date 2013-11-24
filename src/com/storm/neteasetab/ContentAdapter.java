@@ -23,13 +23,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class ContentAdapter extends FragmentPagerAdapter {
 
-	private ArrayList<ContentFragment> mFragments;
 	private String[] mTitles;
+	private ArrayList<ContentFragment> mFragments;
 
-	public ContentAdapter(FragmentManager fm, ArrayList<ContentFragment> fragments, String[] titles) {
+	public ContentAdapter(FragmentManager fm, String[] titles, ArrayList<ContentFragment> fragments) {
 		super(fm);
-		this.mFragments = fragments;
 		this.mTitles = titles;
+		this.mFragments = fragments;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ContentAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return mFragments.size();
+		return mTitles.length;
 	}
 
 	@Override

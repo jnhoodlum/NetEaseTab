@@ -4,17 +4,21 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
+import android.util.Log;
 
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
 
+	static final String TAG = MainActivity.class.getSimpleName();
+
 	private TabPageIndicator mIndicator;
 	private ViewPager mViewPager;
 	private ContentAdapter mAdapter;
-	private String[] mTitles;
+	private FragmentManager fm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,36 +28,37 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initUI() {
+		fm = getSupportFragmentManager();
+		fm.executePendingTransactions();
+		mAdapter = new ContentAdapter(fm, getTitles(), getFragments());
 		mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
 		mViewPager = (ViewPager) findViewById(R.id.vp_content);
-		mAdapter = new ContentAdapter(getSupportFragmentManager(), getFragments(), mTitles);
 		mViewPager.setAdapter(mAdapter);
-		mIndicator.setViewPager(mViewPager);
-		mIndicator.setOnPageChangeListener(new OnPageChangeListener() {
+		mViewPager.setOffscreenPageLimit(0);
 
-			@Override
-			public void onPageSelected(int arg0) {
-				mAdapter.getItem(arg0).onShow();
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
+		// 默认调用第一个Fragment的onShow()
+		mIndicator.setViewPager(mViewPager, 0);
+		mIndicator.setOnPageChangeListener(pageChangeListener);
+		mAdapter.getItem(0).setVisible(true);
 	}
+
+	SimpleOnPageChangeListener pageChangeListener = new SimpleOnPageChangeListener() {
+		@Override
+		public void onPageSelected(int arg0) {
+			Log.e("MainActivity", arg0 + "");
+			mAdapter.getItem(arg0).onRefresh();
+		}
+	};
 
 	private ArrayList<ContentFragment> getFragments() {
 		ArrayList<ContentFragment> fragments = new ArrayList<ContentFragment>();
-		mTitles = getResources().getStringArray(R.array.main_tab_titles);
-		for (String title : mTitles) {
+		for (String title : getTitles()) {
 			fragments.add(ContentFragment.newInstance(title));
 		}
 		return fragments;
+	}
+
+	private String[] getTitles() {
+		return getResources().getStringArray(R.array.main_tab_titles);
 	}
 }

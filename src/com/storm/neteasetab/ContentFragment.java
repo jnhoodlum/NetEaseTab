@@ -20,19 +20,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ContentFragment extends Fragment implements IShowedFragment {
+public class ContentFragment extends Fragment implements OnRefreshListener {
+
+	static final String TAG = ContentFragment.class.getSimpleName();
 
 	private static final int DEFAULT_MSG = 0x01;
 
 	private ProgressBar mProgressBar;
 	private TextView mContentText;
 	private String mContent;
+
+	private boolean forceVisible = false;
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -54,16 +59,25 @@ public class ContentFragment extends Fragment implements IShowedFragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
+		Log.e(TAG, "onCreateView");
 		return inflater.inflate(R.layout.fragment_content, null);
 	}
 
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		mProgressBar = (ProgressBar) getView().findViewById(R.id.pb_content);
-		mContentText = (TextView) getView().findViewById(R.id.tv_content);
+	public void onResume() {
+		super.onResume();
+		if (forceVisible) {
+			initUI();
+		}
+	}
+
+	public void onPause() {
+		super.onPause();
+		Log.e(TAG, "onPause");
 	}
 
 	private void initUI() {
+		mProgressBar = (ProgressBar) getView().findViewById(R.id.pb_content);
+		mContentText = (TextView) getView().findViewById(R.id.tv_content);
 		mProgressBar.setVisibility(View.VISIBLE);
 		mContentText.setVisibility(View.GONE);
 		new Thread(r).start();
@@ -81,8 +95,12 @@ public class ContentFragment extends Fragment implements IShowedFragment {
 		}
 	};
 
+	public void setVisible(boolean visible) {
+		forceVisible = visible;
+	}
+
 	@Override
-	public void onShow() {
+	public void onRefresh() {
 		initUI();
 	}
 }

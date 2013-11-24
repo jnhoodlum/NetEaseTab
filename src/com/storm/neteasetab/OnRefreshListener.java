@@ -16,7 +16,7 @@
 
 package com.storm.neteasetab;
 
-public interface IShowedFragment {
+public interface OnRefreshListener {
 
-	public void onShow();
+	public void onRefresh();
 }
