@@ -13,7 +13,7 @@ ViewPager + Fragment异步实时刷新
 
 而网易新闻确可以如下效果，看下截图：
 
-![Sample image](https://github.com/stormzhang/NetEaseTab/blob/master/art/netease01.png)
+![Sample image](https://github.com/stormzhang/NetEaseTab/blob/master/netease01.png)
 
 ![Sample image](https://github.com/stormzhang/NetEaseTab/blob/master/art/netease02.png)
 
