@@ -13,9 +13,10 @@ ViewPager + Fragment异步实时刷新
 
 而网易新闻确可以如下效果，看下截图：
 
+截图一：
 ![Sample image1](https://raw.github.com/stormzhang/NetEaseTab/master/art/netease01.png)
 
-
+截图二：
 ![Sample image2](https://raw.github.com/stormzhang/NetEaseTab/master/art/netease02.png)
 
 可以看到默认是“热门”页面，而这个时候下一个页面确不会提前加载，会等你切换到下一个tab的时候才会刷新当前页面。
